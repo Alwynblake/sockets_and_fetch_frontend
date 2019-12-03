@@ -1,30 +1,32 @@
 import React, {useState, useEffect} from 'react';
+import Form from './hooks/form.js';
+import Q from './hooks/queue.js';
 
 import io from 'socket.io-client';
-import Q from '@nmq/q/client';
+// import Q from '@nmq/q/client';
 
 // Connect outside of the render cycle ...
 const socket = io.connect('http://localhost:3000');
-const queue = new Q('deeds');
+// const queue = new Q('deeds');
 
 const App = (props) => {
 
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
   const [queueMessage, setQueueMessage] = useState({});
   const [socketMessage, setSocketMessage] = useState({});
 
-  const handleChange = e => {
-    setValues({...values, [e.target.name]: e.target.value});
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-
-    Q.publish('deeds', 'work', values);
-    socket.emit('words', values);
-
-  };
+  // const handleChange = e => {
+  //   setValues({...values, [e.target.name]: e.target.value});
+  // };
+  //
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   e.target.reset();
+  //
+  //   Q.publish('deeds', 'work', values);
+  //   socket.emit('words', values);
+  //
+  // };
 
   useEffect( () => {
     queue.subscribe('work', message => {
@@ -50,6 +52,6 @@ const App = (props) => {
   </form>
   </>
 );
-}
+};
 
 export default App;
